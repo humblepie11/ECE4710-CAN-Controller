@@ -2,7 +2,7 @@
 -- Create Date: 04/14/2020 11:33:47 AM
 -- Module Name: FSM - Behavioral
 -- Revision:
--- Revision 0.01 - File Created
+-- Revision 0.02 - File Created
 -- Additional Comments:
 ----------------------------------------------------------------------------------
 library IEEE;
@@ -49,7 +49,11 @@ begin
                  i <= i + 1;
             end if;
                      
-        when S3 => y <= S1;
+        when S3 => 
+            if bitcount = "1010011"
+                then y <= S3;
+            else y <= S1;
+            end if;
          end case;
      end if;             
 end process;
@@ -73,11 +77,14 @@ case y is
     when S2 =>
     if i = 97
         then E_out <= '1';
+             E_in <= '0';
     else 
         Eq <= '1';
+        E_in <= '0';
         sel <= conv_std_logic_vector (i, 7);
     end if;
     when S3 =>
+    E_in <= '0';
     sel <= "0000000";
     done <= '1';
 
